@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Layout from '../components/Layout';
 
 const ListItem = ({ items, ...props }) => {
   const [filteredItems, setFilteredItems] = useState(items);
@@ -24,10 +25,10 @@ const ListItem = ({ items, ...props }) => {
 const About = () => {
   const items = ['Julio', 'Carlos', 'Zeca', 'Marla'];
   return (
-    <>
+    <Layout title='About'>
       <h1>About</h1>
       <ListItem items={items} />
-    </>
+    </Layout>
   );
 };
 
