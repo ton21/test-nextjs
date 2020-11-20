@@ -1,12 +1,12 @@
 import React from 'react';
 import Layout from '../components/Layout';
 
-function Profile() {
+function Contact() {
   return (
-    <Layout title='Profile'>
-      <h1>Profile</h1>
+    <Layout title='Contact'>
+      <h1>Contact</h1>
     </Layout>
   );
 }
 
-export default Profile;
+export default Contact;

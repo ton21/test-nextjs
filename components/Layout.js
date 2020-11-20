@@ -17,11 +17,11 @@ function Layout({ children, title }) {
         <Link href='/'>
           <a title='Item'>Home</a>
         </Link>
-        <Link href='/about'>
+        {/* <Link href='/about'>
           <a title='Item'>About</a>
-        </Link>
-        <Link href='/profile'>
-          <a title='Item'>Profile</a>
+        </Link> */}
+        <Link href='/contact'>
+          <a title='Item'>Contact</a>
         </Link>
       </header>
       {children}
