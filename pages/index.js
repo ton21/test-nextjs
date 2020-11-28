@@ -1,23 +1,34 @@
-import React, { useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
+import Link from 'next/link';
+import SEO from '../components/SEO';
+import { client } from '../lib/prismic';
+import Prismic from 'prismic-javascript';
+import PrismicDOM from 'prismic-dom';
 
-const Home = ({ users }) => {
+const Home = ({ users, recommendedProducts }) => {
   return (
-    <Layout title='Home'>
+    <Layout>
       <div>
-        <h2>Home</h2>
-      </div>
-      <div className='users'>
+        <SEO title='My Website' description='lorem ipsum' />
+        <h1>Products</h1>
         <ul className='users-list'>
-          {users.map(({ id, name }) => (
+          {/* {users.map(({ id, name }) => (
             <li key={id}>
               <Link href={`/about/[id]`} as={`/about/${id}`}>
                 <a title={name}>{name}</a>
               </Link>
             </li>
-          ))}
+          ))} */}
+          <li>
+            {recommendedProducts.map((item) => (
+              <li key={item.id}>
+                <Link href={`products/${item.uid}`}>
+                  <a>{PrismicDOM.RichText.asText(item.data.titulo)}</a>
+                </Link>
+              </li>
+            ))}
+          </li>
         </ul>
         <style jsx>
           {`
@@ -33,24 +44,34 @@ const Home = ({ users }) => {
           `}
         </style>
       </div>
-      {/* <Image src='/img/cyber.jpg' width='200' height='200' alt='Cyber' /> */}
     </Layout>
   );
 };
 
-export const getServerSideProps = async () => {
-  try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/users');
-    const users = await response.json();
-    // console.log(users);
-    return {
-      props: {
-        users,
-      },
-    };
-  } catch (err) {
-    console.log(err);
-  }
+// export const getServerSideProps = async () => {
+//   try {
+//     const response = await fetch('https://jsonplaceholder.typicode.com/users');
+//     const users = await response.json();
+//     return {
+//       props: {
+//         users,
+//       },
+//     };
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+export const getStaticProps = async () => {
+  const recommendedProducts = await client().query([
+    Prismic.Predicates.at('document.type', 'product'),
+  ]);
+  return {
+    props: {
+      recommendedProducts: recommendedProducts.results,
+      revalidate: 60,
+    },
+  };
 };
 
 export default Home;

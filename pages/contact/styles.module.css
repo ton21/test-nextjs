@@ -1,0 +1,10 @@
+.title {
+  color: #555;
+}
+
+.box {
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 2px 2px 7px #ccc;
+  padding: 20px;
+}
